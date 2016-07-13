@@ -16,10 +16,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.sencha.gxt.widget.core.client.box.MessageBox;
-import com.sencha.gxt.widget.core.client.button.TextButton;
-import com.sencha.gxt.widget.core.client.event.SelectEvent;
-import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -37,10 +33,15 @@ public class Calc implements EntryPoint {
 	 */
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
+	
+	CalculatorView calcView;
+	CalculatorCtrl calcCtrl;
+	CalculatorModel calcModel;
 	/**
 	 * This is the entry point method.
 	 */
-	public void onModuleLoad() {
+	public void onModuleLoad() {	
+		
 		final Button sendButton = new Button("Send");
 		final TextBox nameField = new TextBox();
 		nameField.setText("GWT User");
@@ -51,24 +52,19 @@ public class Calc implements EntryPoint {
 
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
-		RootPanel.get("nameFieldContainer").add(nameField);
-		RootPanel.get("sendButtonContainer").add(sendButton);
-		RootPanel.get("errorLabelContainer").add(errorLabel);
 		
-		//test
-		TextButton textButton = new TextButton("Verify GXT Works");
-		RootPanel.get().add(textButton);
-		textButton.addSelectHandler(new SelectHandler() {
-			@Override
-			public void onSelect(SelectEvent event) {
-				MessageBox messageBox = new MessageBox("GXT Works.");
-			    messageBox.show();
-			}
-		});
+		//Create the calculator
+		calcModel = new CalculatorModel();
+		calcCtrl = new CalculatorCtrl(calcModel);
+		calcView = new CalculatorView(calcCtrl, RootPanel.get("calcContainer"));
+		
+		calcModel.addObserver(calcView);
+		
+		//RootPanel.get("calcContainer").add(CalculatorView.BuildUI());
 
 		// Focus the cursor on the name field when the app loads
-		nameField.setFocus(true);
-		nameField.selectAll();
+		//nameField.setFocus(true);
+		//nameField.selectAll();
 
 		// Create the popup dialog box
 		final DialogBox dialogBox = new DialogBox();

@@ -1,0 +1,2 @@
+serviceClass: inaer.client.GreetingService
+path: 62483613C972F3877395D9A5708CD8AF.gwt.rpc
