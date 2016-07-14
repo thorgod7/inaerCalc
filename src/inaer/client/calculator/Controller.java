@@ -1,18 +1,18 @@
-package inaer.client;
+package inaer.client.calculator;
 
 /**
  * Controller for the Calculator component.
  * @author Samuel Ors
  *
  */
-public class CalculatorCtrl {
+public class Controller {
 	public enum ECalcCmds {
 		none, v0, v1, v2, v3, v4, v5, v6, v7, v8, v9, dot, clear, clearCurr, sign, percent, add, substract, multiply, divide, equal
 	}
 	
-	private CalculatorModel model;
+	private Model model;
 	
-	CalculatorCtrl(CalculatorModel model) {
+	public Controller(Model model) {
 		this.model = model;
 	}			
 	protected void updateValue(ECalcCmds cmd) {

@@ -1,5 +1,8 @@
 package inaer.client;
 
+import inaer.client.calculator.Controller;
+import inaer.client.calculator.Model;
+import inaer.client.calculator.View;
 import inaer.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -34,9 +37,9 @@ public class Calc implements EntryPoint {
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
 	
-	CalculatorView calcView;
-	CalculatorCtrl calcCtrl;
-	CalculatorModel calcModel;
+	View calcView;
+	Controller calcCtrl;
+	Model calcModel;
 	/**
 	 * This is the entry point method.
 	 */
@@ -54,9 +57,9 @@ public class Calc implements EntryPoint {
 		// Use RootPanel.get() to get the entire body element
 		
 		//Create the calculator
-		calcModel = new CalculatorModel();
-		calcCtrl = new CalculatorCtrl(calcModel);
-		calcView = new CalculatorView(calcCtrl, RootPanel.get("calcContainer"));
+		calcModel = new Model();
+		calcCtrl = new Controller(calcModel);
+		calcView = new View(calcCtrl, RootPanel.get("calcContainer"));
 		
 		calcModel.addObserver(calcView);
 		

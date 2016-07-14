@@ -1,4 +1,4 @@
-package inaer.client;
+package inaer.client.calculator;
 
 import java.util.*;
 
@@ -10,13 +10,13 @@ interface ModelObserver {
  * Model for the Calculator component.
  * @author Samuel Ors
  */
-public class CalculatorModel {
+public class Model {
 	private float accumulator;
 	private String currentValue;
-	private CalculatorCtrl.ECalcCmds currentOperator;
+	private Controller.ECalcCmds currentOperator;
 	private List<ModelObserver> observers = new ArrayList<ModelObserver>();
 	
-	CalculatorModel() {
+	public Model() {
 		accumulator = 0;
 		currentValue = "0";
 	}
@@ -50,11 +50,11 @@ public class CalculatorModel {
 		notifyObjservers();
 	}
 
-	public CalculatorCtrl.ECalcCmds getCurrentOperator() {
+	public Controller.ECalcCmds getCurrentOperator() {
 		return currentOperator;
 	}
 
-	public void setCurrentOperator(CalculatorCtrl.ECalcCmds currentOperator) {
+	public void setCurrentOperator(Controller.ECalcCmds currentOperator) {
 		this.currentOperator = currentOperator;
 		notifyObjservers();
 	}

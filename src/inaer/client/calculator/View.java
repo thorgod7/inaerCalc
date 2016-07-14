@@ -1,4 +1,4 @@
-package inaer.client;
+package inaer.client.calculator;
 
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.Panel;
@@ -19,8 +19,8 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
  * @author Samuel Ors
  */
 class CalcButton extends TextButton implements SelectHandler {	
-	private CalculatorCtrl ctrl;
-	private CalculatorCtrl.ECalcCmds cmd = CalculatorCtrl.ECalcCmds.none;
+	private Controller ctrl;
+	private Controller.ECalcCmds cmd = Controller.ECalcCmds.none;
 	
 	public CalcButton() {
 		super();
@@ -30,7 +30,7 @@ class CalcButton extends TextButton implements SelectHandler {
 		super(text);
 		this.addSelectHandler(this);
 	}
-	public CalcButton(String text, CalculatorCtrl ctrl, CalculatorCtrl.ECalcCmds cmd) {
+	public CalcButton(String text, Controller ctrl, Controller.ECalcCmds cmd) {
 		super(text);
 		this.ctrl = ctrl;
 		this.cmd = cmd;
@@ -47,8 +47,8 @@ class CalcButton extends TextButton implements SelectHandler {
  * View for the Calculator component.
  * @author Samuel Ors
  */
-public class CalculatorView implements ModelObserver {
-	private CalculatorCtrl ctrl;
+public class View implements ModelObserver {
+	private Controller ctrl;
 	private TextBox editArea;
  
 	private void buildUI(Panel placeHolder) {				
@@ -77,46 +77,46 @@ public class CalculatorView implements ModelObserver {
 		hl = new HorizontalLayoutContainer();
 		vl.add(hl, vld);
 		hl.add(editArea, new HorizontalLayoutData(BTN_WIDTH*3, BTN_HEIGHT, margins));
-		hl.add(new CalcButton("C", ctrl,  CalculatorCtrl.ECalcCmds.clear), hld);	
-		hl.add(new CalcButton("CE", ctrl, CalculatorCtrl.ECalcCmds.clearCurr), hld);
+		hl.add(new CalcButton("C", ctrl,  Controller.ECalcCmds.clear), hld);	
+		hl.add(new CalcButton("CE", ctrl, Controller.ECalcCmds.clearCurr), hld);
 		
 		//Row 2
 		hl = new HorizontalLayoutContainer();
 		vl.add(hl, vld);
-		hl.add(new CalcButton("7", ctrl, CalculatorCtrl.ECalcCmds.v7), hld);	
-		hl.add(new CalcButton("8", ctrl, CalculatorCtrl.ECalcCmds.v8), hld);
-		hl.add(new CalcButton("9", ctrl, CalculatorCtrl.ECalcCmds.v9), hld);
-		hl.add(new CalcButton("+/-", ctrl, CalculatorCtrl.ECalcCmds.sign), hld);
-		hl.add(new CalcButton("%", ctrl, CalculatorCtrl.ECalcCmds.percent), hld);
+		hl.add(new CalcButton("7", ctrl, Controller.ECalcCmds.v7), hld);	
+		hl.add(new CalcButton("8", ctrl, Controller.ECalcCmds.v8), hld);
+		hl.add(new CalcButton("9", ctrl, Controller.ECalcCmds.v9), hld);
+		hl.add(new CalcButton("+/-", ctrl, Controller.ECalcCmds.sign), hld);
+		hl.add(new CalcButton("%", ctrl, Controller.ECalcCmds.percent), hld);
 
 		//Row 3
 		hl = new HorizontalLayoutContainer();
 		vl.add(hl, vld);
-		hl.add(new CalcButton("4", ctrl, CalculatorCtrl.ECalcCmds.v4), hld);	
-		hl.add(new CalcButton("5", ctrl, CalculatorCtrl.ECalcCmds.v5), hld);
-		hl.add(new CalcButton("6", ctrl, CalculatorCtrl.ECalcCmds.v6), hld);
-		hl.add(new CalcButton("+", ctrl, CalculatorCtrl.ECalcCmds.add), hld);
-		hl.add(new CalcButton("-", ctrl, CalculatorCtrl.ECalcCmds.substract), hld);
+		hl.add(new CalcButton("4", ctrl, Controller.ECalcCmds.v4), hld);	
+		hl.add(new CalcButton("5", ctrl, Controller.ECalcCmds.v5), hld);
+		hl.add(new CalcButton("6", ctrl, Controller.ECalcCmds.v6), hld);
+		hl.add(new CalcButton("+", ctrl, Controller.ECalcCmds.add), hld);
+		hl.add(new CalcButton("-", ctrl, Controller.ECalcCmds.substract), hld);
 		
 		//Row 4
 		hl = new HorizontalLayoutContainer();
 		vl.add(hl, vld);
-		hl.add(new CalcButton("1", ctrl, CalculatorCtrl.ECalcCmds.v1), hld);	
-		hl.add(new CalcButton("2", ctrl, CalculatorCtrl.ECalcCmds.v2), hld);
-		hl.add(new CalcButton("3", ctrl, CalculatorCtrl.ECalcCmds.v3), hld);
-		hl.add(new CalcButton("*", ctrl, CalculatorCtrl.ECalcCmds.multiply), hld);
-		hl.add(new CalcButton("/", ctrl, CalculatorCtrl.ECalcCmds.divide), hld);
+		hl.add(new CalcButton("1", ctrl, Controller.ECalcCmds.v1), hld);	
+		hl.add(new CalcButton("2", ctrl, Controller.ECalcCmds.v2), hld);
+		hl.add(new CalcButton("3", ctrl, Controller.ECalcCmds.v3), hld);
+		hl.add(new CalcButton("*", ctrl, Controller.ECalcCmds.multiply), hld);
+		hl.add(new CalcButton("/", ctrl, Controller.ECalcCmds.divide), hld);
 
 		//Row 5
 		hl = new HorizontalLayoutContainer();
 		vl.add(hl, vld);
-		hl.add(new CalcButton("0", ctrl, CalculatorCtrl.ECalcCmds.v0), hld);	
-		hl.add(new CalcButton(".", ctrl, CalculatorCtrl.ECalcCmds.dot), hld);
-		hl.add(new CalcButton("=", ctrl, CalculatorCtrl.ECalcCmds.equal), 
+		hl.add(new CalcButton("0", ctrl, Controller.ECalcCmds.v0), hld);	
+		hl.add(new CalcButton(".", ctrl, Controller.ECalcCmds.dot), hld);
+		hl.add(new CalcButton("=", ctrl, Controller.ECalcCmds.equal), 
 			new HorizontalLayoutData(BTN_WIDTH*3 - BTN_MARGIN, BTN_HEIGHT, new Margins(0, 0, 0, BTN_WIDTH*2 + BTN_MARGIN)));
 	}
 	
-	CalculatorView(CalculatorCtrl ctrl, Panel placeHolder) {
+	public View(Controller ctrl, Panel placeHolder) {
 		this.ctrl = ctrl;
 		buildUI(placeHolder);
 		refreshView();
