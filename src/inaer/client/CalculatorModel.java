@@ -6,6 +6,10 @@ interface ModelObserver {
 	public void onModelChange();
 }
 
+/**
+ * Model for the Calculator component.
+ * @author Samuel Ors
+ */
 public class CalculatorModel {
 	private float accumulator;
 	private String currentValue;
