@@ -123,14 +123,10 @@ public class View implements ModelObserver {
 	}
 	protected void refreshView() {
 		String value = ctrl.getCurrentValue();
-		editArea.setText(value);
-		/*float fValue = Float.parseFloat(value);
-		if( editArea != null ) {
-			if( fValue % 1 == 0)
-				editArea.setText(Integer.toString((int)fValue));
-			else
-				editArea.setText(Float.toString(fValue));
-		}*/
+		if(value == "")
+			editArea.setText("0");
+		else
+			editArea.setText(value);
 	}
 	//ModelObserver
 	@Override

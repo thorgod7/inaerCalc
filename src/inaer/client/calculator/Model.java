@@ -11,14 +11,14 @@ interface ModelObserver {
  * @author Samuel Ors
  */
 public class Model {
-	private float accumulator;
+	private double accumulator;
 	private String currentValue;
 	private Controller.ECalcCmds currentOperator;
 	private List<ModelObserver> observers = new ArrayList<ModelObserver>();
 	
 	public Model() {
 		accumulator = 0;
-		currentValue = "0";
+		clearCurrentValue();
 	}
 	
 	protected void notifyObjservers() {
@@ -29,11 +29,11 @@ public class Model {
 		observers.add(toAdd);
     }
 
-	public float getAccumulator() {
+	public double getAccumulator() {
 		return accumulator;
 	}
 
-	public void setAccumulator(float accumulator) {
+	public void setAccumulator(double accumulator) {
 		this.accumulator = accumulator;
 		notifyObjservers();
 	}
@@ -43,7 +43,7 @@ public class Model {
 	}
 
 	public void clearCurrentValue() {
-		setCurrentValue("0");
+		setCurrentValue("");
 	}
 	public void setCurrentValue(String currentValue) {
 		this.currentValue = currentValue;
