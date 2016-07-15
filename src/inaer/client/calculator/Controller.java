@@ -1,6 +1,13 @@
 package inaer.client.calculator;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.NumberFormat;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
+import inaer.client.CalcService;
+import inaer.client.CalcServiceAsync;
+//import inaer.client.GreetingService;
+//import inaer.client.GreetingServiceAsync;
 
 /**
  * Controller for the Calculator component.
@@ -9,27 +16,34 @@ import com.google.gwt.i18n.client.NumberFormat;
  */
 public class Controller {
 	public enum ECalcCmds {
-		none, v0, v1, v2, v3, v4, v5, v6, v7, v8, v9, dot, clear, clearCurr, sign, percent, add, substract, multiply, divide, equal
+		none, v0, v1, v2, v3, v4, v5, v6, v7, v8, v9, dot, clear, clearCurr, sign, percent, add, substract, multiply, divide, equal, bin
 	}
 	
 	private Model model;
 	private ECalcCmds lastCmd = ECalcCmds.none;
+	/**
+	 * Create a remote service proxy to talk to the server-side Calc service.
+	 */
+	private final CalcServiceAsync calcService = GWT.create(CalcService.class);
+
 	
 	public Controller(Model model) {
 		this.model = model;
 	}			
 	protected void updateValue(ECalcCmds cmd) {
-		String value = model.getCurrentValue();
-		switch(lastCmd){
+		switch(lastCmd) {
 			case add:
 			case substract:
 			case multiply:
 			case divide:
 			case equal:
-				value="";
+			case percent:
+				model.clearCurrentValue();
+				break;
 			default:
-				break; 
+				break;
 		}
+		String value = model.getCurrentValue();
 		switch(cmd) {
 			default:
 			case none: break;
@@ -43,15 +57,11 @@ public class Controller {
 			case v7: value += '7'; break;
 			case v8: value += '8'; break;
 			case v9: value += '9'; break;
-			case dot:
-				if(value == "")
-					value = "0.";
-				else
-					value += '.';				
-				break;
+			case dot: value += '.'; break;
 		}
 		//Try to convert to double, and if possible, update the model.
 		try {			
+			value = getTrimmedStringValue(value);
 			Double.parseDouble(value);
 			model.setCurrentValue(value);
 		}
@@ -78,9 +88,20 @@ public class Controller {
 			model.clearCurrentValue();
 		}
 	}
-	protected String getTrimmedValue(double fValue) {		
+	protected String getStringValue(double fValue) {		
 		NumberFormat fmt = NumberFormat.getDecimalFormat();		
 		return fmt.format(fValue);	
+	}
+	protected String getTrimmedStringValue(String value) {
+		int sInd=0;
+		for(int i=0; i<value.length()-1; i++) {
+			if(value.charAt(i)=='0' && value.charAt(i+1)!='.') {
+				sInd = i+1;			
+				break;
+			}
+		}
+		String res = value.substring(sInd);
+		return res;
 	}
 	protected void processPercent() {
 		double a = model.getAccumulator();
@@ -105,7 +126,7 @@ public class Controller {
 			}
 			model.setAccumulator(0);
 			model.setCurrentOperator(ECalcCmds.none);
-			model.setCurrentValue(getTrimmedValue(a));
+			model.setCurrentValue(getStringValue(a));
 			lastCmd = ECalcCmds.none;
 		}
 		catch(Exception e) {
@@ -134,11 +155,34 @@ public class Controller {
 			}
 			model.setAccumulator(0);
 			model.setCurrentOperator(ECalcCmds.none);
-			model.setCurrentValue(getTrimmedValue(a));
+			model.setCurrentValue(getStringValue(a));
 			lastCmd = ECalcCmds.none;
 		}
 		catch(Exception e) {
 		}
+	}
+	protected void processToBin() {
+		long lValue;
+		try {
+			lValue = Long.parseLong(model.getCurrentValue());
+		}
+		catch(Exception e) {
+			model.setCurrentValue("Invalid integer");
+			return;
+		}
+		calcService.toBin(lValue, new AsyncCallback<String>() {
+			public void onFailure(Throwable caught) {
+				model.setCurrentValue("Error on RPC");
+				model.setAccumulator(0);
+				model.setCurrentOperator(ECalcCmds.none);
+			}
+
+			public void onSuccess(String result) {
+				model.setCurrentValue(result);
+				model.setAccumulator(0);
+				model.setCurrentOperator(ECalcCmds.none);
+			}
+		});	
 	}
 	public void processCmd(ECalcCmds cmd) {		
 		switch(cmd) {
@@ -186,6 +230,9 @@ public class Controller {
 				break;
 			case equal:
 				processRes();
+				break;
+			case bin:
+				processToBin();
 				break;
 		}
 		lastCmd = cmd;

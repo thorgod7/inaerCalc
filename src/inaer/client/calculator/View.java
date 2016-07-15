@@ -112,8 +112,9 @@ public class View implements ModelObserver {
 		vl.add(hl, vld);
 		hl.add(new CalcButton("0", ctrl, Controller.ECalcCmds.v0), hld);	
 		hl.add(new CalcButton(".", ctrl, Controller.ECalcCmds.dot), hld);
-		hl.add(new CalcButton("=", ctrl, Controller.ECalcCmds.equal), 
-			new HorizontalLayoutData(BTN_WIDTH*3 - BTN_MARGIN, BTN_HEIGHT, new Margins(0, 0, 0, BTN_WIDTH*2 + BTN_MARGIN)));
+		hl.add(new CalcButton("BIN", ctrl, Controller.ECalcCmds.bin), hld);
+		hl.add(new CalcButton("=", ctrl, Controller.ECalcCmds.equal),
+			new HorizontalLayoutData(BTN_WIDTH*2, BTN_HEIGHT, margins));
 	}
 	
 	public View(Controller ctrl, Panel placeHolder) {

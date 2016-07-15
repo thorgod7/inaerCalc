@@ -43,7 +43,7 @@ public class Model {
 	}
 
 	public void clearCurrentValue() {
-		setCurrentValue("");
+		setCurrentValue("0");
 	}
 	public void setCurrentValue(String currentValue) {
 		this.currentValue = currentValue;

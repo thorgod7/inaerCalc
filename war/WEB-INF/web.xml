@@ -7,13 +7,13 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>inaer.server.GreetingServiceImpl</servlet-class>
+    <servlet-name>calcServlet</servlet-name>
+    <servlet-class>inaer.server.CalcServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/calc/greet</url-pattern>
+    <servlet-name>calcServlet</servlet-name>
+    <url-pattern>/calc/tobin</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->
