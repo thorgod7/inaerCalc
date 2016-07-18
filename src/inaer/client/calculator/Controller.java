@@ -1,13 +1,12 @@
 package inaer.client.calculator;
 
+//import com.google.appengine.api.datastore.Key;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import inaer.client.CalcService;
 import inaer.client.CalcServiceAsync;
-//import inaer.client.GreetingService;
-//import inaer.client.GreetingServiceAsync;
 
 /**
  * Controller for the Calculator component.
@@ -15,6 +14,7 @@ import inaer.client.CalcServiceAsync;
  *
  */
 public class Controller {
+
 	public enum ECalcCmds {
 		none, v0, v1, v2, v3, v4, v5, v6, v7, v8, v9, dot, clear, clearCurr, sign, percent, add, substract, multiply, divide, equal, bin
 	}
@@ -26,9 +26,8 @@ public class Controller {
 	 */
 	private final CalcServiceAsync calcService = GWT.create(CalcService.class);
 
-	
 	public Controller(Model model) {
-		this.model = model;
+		this.model = model;		
 	}			
 	protected void updateValue(ECalcCmds cmd) {
 		switch(lastCmd) {

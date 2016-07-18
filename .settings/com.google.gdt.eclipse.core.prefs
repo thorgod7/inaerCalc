@@ -1,3 +1,4 @@
 eclipse.preferences.version=1
+jarsExcludedFromWebInfLib=D\:/Samuel/Projects/GooglePlugin/calc/lib/gxt.jar
 warSrcDir=war
 warSrcDirIsOutput=true
