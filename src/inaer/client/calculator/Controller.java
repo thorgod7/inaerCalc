@@ -28,7 +28,7 @@ public class Controller {
 
 	public Controller(Model model) {
 		this.model = model;		
-	}			
+	}	
 	protected void updateValue(ECalcCmds cmd) {
 		switch(lastCmd) {
 			case add:
@@ -182,6 +182,9 @@ public class Controller {
 				model.setCurrentOperator(ECalcCmds.none);
 			}
 		});	
+	}
+	public CalcServiceAsync getService() {
+		return this.calcService;
 	}
 	public void processCmd(ECalcCmds cmd) {		
 		switch(cmd) {
