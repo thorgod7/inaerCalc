@@ -64,7 +64,6 @@ public class View implements ModelObserver {
     // Main panel for the calculator UI
     DecoratorPanel panel = new DecoratorPanel();
     placeHolder.add(panel);
-    // RootPanel.get("calcContainer").add(panel);
 
     // Main vertical for placing rows
     VerticalLayoutContainer vl = new VerticalLayoutContainer();

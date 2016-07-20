@@ -45,7 +45,6 @@ public class CalcServiceImpl extends RemoteServiceServlet implements CalcService
     EntityTransaction tx = em.getTransaction();
     tx.begin();
     Query q = em.createQuery("SELECT t FROM CalcData t ORDER BY timestamp");
-    // List<CalcData> resList = q.getResultList();
     @SuppressWarnings("unchecked")
     List<CalcData> resList = q.getResultList();
     for (CalcData dataObj : resList) {
@@ -61,7 +60,6 @@ public class CalcServiceImpl extends RemoteServiceServlet implements CalcService
     try {
       res = Long.toBinaryString(value);
       storeRequest(value, res);
-      // printDatastore();
     } catch (Exception e) {
       throw new IllegalArgumentException("Error in binary conversion");
     }
