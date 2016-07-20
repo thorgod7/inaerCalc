@@ -12,6 +12,7 @@ import inaer.shared.CalcDataSimple;
  */
 @RemoteServiceRelativePath("tobin")
 public interface CalcService extends RemoteService {
-	String toBin(long value) throws IllegalArgumentException;
-	List<CalcDataSimple> getData();
+  String toBin(long value) throws IllegalArgumentException;
+
+  List<CalcDataSimple> getData();
 }

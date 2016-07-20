@@ -3,59 +3,62 @@ package inaer.client.calculator;
 import java.util.*;
 
 interface ModelObserver {
-	public void onModelChange();
+  public void onModelChange();
 }
 
 /**
  * Model for the Calculator component.
+ * 
  * @author Samuel Ors
  */
 public class Model {
-	private double accumulator;
-	private String currentValue;
-	private Controller.ECalcCmds currentOperator;
-	private List<ModelObserver> observers = new ArrayList<ModelObserver>();
-	
-	public Model() {
-		accumulator = 0;
-		clearCurrentValue();
-	}
-	
-	protected void notifyObjservers() {
-		for (ModelObserver o : observers)
-            o.onModelChange();
-	}
-	public void addObserver(ModelObserver toAdd) {
-		observers.add(toAdd);
-    }
+  private double accumulator;
+  private String currentValue;
+  private Controller.ECalcCmds currentOperator;
+  private List<ModelObserver> observers = new ArrayList<ModelObserver>();
 
-	public double getAccumulator() {
-		return accumulator;
-	}
+  public Model() {
+    accumulator = 0;
+    clearCurrentValue();
+  }
 
-	public void setAccumulator(double accumulator) {
-		this.accumulator = accumulator;
-		notifyObjservers();
-	}
+  protected void notifyObjservers() {
+    for (ModelObserver o : observers)
+      o.onModelChange();
+  }
 
-	public String getCurrentValue() {
-		return currentValue;
-	}
+  public void addObserver(ModelObserver toAdd) {
+    observers.add(toAdd);
+  }
 
-	public void clearCurrentValue() {
-		setCurrentValue("0");
-	}
-	public void setCurrentValue(String currentValue) {
-		this.currentValue = currentValue;
-		notifyObjservers();
-	}
+  public double getAccumulator() {
+    return accumulator;
+  }
 
-	public Controller.ECalcCmds getCurrentOperator() {
-		return currentOperator;
-	}
+  public void setAccumulator(double accumulator) {
+    this.accumulator = accumulator;
+    notifyObjservers();
+  }
 
-	public void setCurrentOperator(Controller.ECalcCmds currentOperator) {
-		this.currentOperator = currentOperator;
-		notifyObjservers();
-	}
+  public String getCurrentValue() {
+    return currentValue;
+  }
+
+  public void clearCurrentValue() {
+    setCurrentValue("0");
+  }
+
+  public void setCurrentValue(String currentValue) {
+    this.currentValue = currentValue;
+    notifyObjservers();
+  }
+
+  public Controller.ECalcCmds getCurrentOperator() {
+    return currentOperator;
+  }
+
+  public void setCurrentOperator(Controller.ECalcCmds currentOperator) {
+    this.currentOperator = currentOperator;
+    notifyObjservers();
+  }
 }

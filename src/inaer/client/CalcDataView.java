@@ -51,72 +51,83 @@ public class CalcDataView implements IsWidget, EntryPoint {
   protected static final int MIN_WIDTH = 480;
 
   private class DataPagedResult extends ArrayList<CalcDataSimple> implements PagingLoadResult<CalcDataSimple> {
-	private static final long serialVersionUID = 1L;
-	private int offset = 0;
-	@Override
-	public List<CalcDataSimple> getData() {
-		return this;
-	}
-	@Override
-	public int getOffset() {
-		return offset;
-	}
-	@Override
-	public void setOffset(int offset) {
-		offset = 0;
-	}
-	@Override
-	public int getTotalLength() {
-		return size();
-	}
-	@Override
-	public void setTotalLength(int totalLength) {
-		//Not implemented
-	}	  
+    private static final long serialVersionUID = 1L;
+    private int offset = 0;
+
+    @Override
+    public List<CalcDataSimple> getData() {
+      return this;
+    }
+
+    @Override
+    public int getOffset() {
+      return offset;
+    }
+
+    @Override
+    public void setOffset(int offset) {
+      offset = 0;
+    }
+
+    @Override
+    public int getTotalLength() {
+      return size();
+    }
+
+    @Override
+    public void setTotalLength(int totalLength) {
+      // Not implemented
+    }
   }
+
   private static final CalcDataProperties props = GWT.create(CalcDataProperties.class);
 
   private ContentPanel panel;
   private DataPagedResult dataList = new DataPagedResult();
-        
+
   public void clearData() {
     dataList.clear();
   }
+
   public void addData(CalcDataSimple data) {
     dataList.add(data);
-  } 
-  
+  }
+
   @Override
   public Widget asWidget() {
-  if (panel == null) {
-		  final DataProxy<PagingLoadConfig, PagingLoadResult<CalcDataSimple>> dataPagingLoader = 
-			new DataProxy<PagingLoadConfig, PagingLoadResult<CalcDataSimple>>() {
-			  @Override
-			  public void load(PagingLoadConfig loadConfig, Callback<PagingLoadResult<CalcDataSimple>, Throwable> callback) {
-				  int offset = loadConfig.getOffset();
-				  dataList.setOffset(offset);
-				  callback.onSuccess(dataList);				
-			  }
-		  };
-    	
-	  ColumnConfig<CalcDataSimple, String> date = new ColumnConfig<CalcDataSimple, String>(props.timestamp(), 30, "Date");
-	  ColumnConfig<CalcDataSimple, Double> input = new ColumnConfig<CalcDataSimple, Double>(props.input(), 20, "Input");
-      ColumnConfig<CalcDataSimple, String> output= new ColumnConfig<CalcDataSimple, String>(props.output(), 40, "Output");
-//      
-//      ColumnConfig<Stock, Double> changeCol = new ColumnConfig<Stock, Double>(props.change(), 75, "Change");
-//      ColumnConfig<Stock, Date> lastTransCol = new ColumnConfig<Stock, Date>(props.lastTrans(), 100, "Last Updated");
+    if (panel == null) {
+      final DataProxy<PagingLoadConfig, PagingLoadResult<CalcDataSimple>> dataPagingLoader = new DataProxy<PagingLoadConfig, PagingLoadResult<CalcDataSimple>>() {
+        @Override
+        public void load(PagingLoadConfig loadConfig, Callback<PagingLoadResult<CalcDataSimple>, Throwable> callback) {
+          int offset = loadConfig.getOffset();
+          dataList.setOffset(offset);
+          callback.onSuccess(dataList);
+        }
+      };
 
-//      final NumberFormat number = NumberFormat.getFormat("0.00");
-//      changeCol.setCell(new AbstractCell<Double>() {
-//        @Override
-//        public void render(Context context, Double value, SafeHtmlBuilder sb) {
-//          String style = "style='color: " + (value < 0 ? "red" : "green") + "'";
-//          String v = number.format(value);
-//          sb.appendHtmlConstant("<span " + style + ">" + v + "</span>");
-//        }
-//      });
+      ColumnConfig<CalcDataSimple, String> date = new ColumnConfig<CalcDataSimple, String>(props.timestamp(), 30,
+          "Date");
+      ColumnConfig<CalcDataSimple, Double> input = new ColumnConfig<CalcDataSimple, Double>(props.input(), 20, "Input");
+      ColumnConfig<CalcDataSimple, String> output = new ColumnConfig<CalcDataSimple, String>(props.output(), 40,
+          "Output");
+      //
+      // ColumnConfig<Stock, Double> changeCol = new ColumnConfig<Stock,
+      // Double>(props.change(), 75, "Change");
+      // ColumnConfig<Stock, Date> lastTransCol = new ColumnConfig<Stock,
+      // Date>(props.lastTrans(), 100, "Last Updated");
 
-      //timestamp.setCell(new DateCell(DateTimeFormat.getFormat("MM/dd/yyyy")));
+      // final NumberFormat number = NumberFormat.getFormat("0.00");
+      // changeCol.setCell(new AbstractCell<Double>() {
+      // @Override
+      // public void render(Context context, Double value, SafeHtmlBuilder sb) {
+      // String style = "style='color: " + (value < 0 ? "red" : "green") + "'";
+      // String v = number.format(value);
+      // sb.appendHtmlConstant("<span " + style + ">" + v + "</span>");
+      // }
+      // });
+
+      // timestamp.setCell(new
+      // DateCell(DateTimeFormat.getFormat("MM/dd/yyyy")));
 
       List<ColumnConfig<CalcDataSimple, ?>> columns = new ArrayList<ColumnConfig<CalcDataSimple, ?>>();
       columns.add(date);
@@ -127,14 +138,18 @@ public class CalcDataView implements IsWidget, EntryPoint {
 
       ListStore<CalcDataSimple> store = new ListStore<CalcDataSimple>(props.key());
       store.addAll(dataList);
-      
-	  /*final PagingLoader<PagingLoadConfig, PagingLoadResult<CalcDataSimple>> gridLoader = 
-    		  new PagingLoader<PagingLoadConfig, PagingLoadResult<CalcDataSimple>>(dataPagingLoader);
-      gridLoader.setRemoteSort(true);*/
-      
+
+      /*
+       * final PagingLoader<PagingLoadConfig, PagingLoadResult<CalcDataSimple>>
+       * gridLoader = new PagingLoader<PagingLoadConfig,
+       * PagingLoadResult<CalcDataSimple>>(dataPagingLoader);
+       * gridLoader.setRemoteSort(true);
+       */
+
       final CalcDataPageLoader loader = new CalcDataPageLoader(dataPagingLoader);
-      	loader.setRemoteSort(true);
-      	loader.addLoadHandler(new LoadResultListStoreBinding<PagingLoadConfig, CalcDataSimple, PagingLoadResult<CalcDataSimple>>(store));
+      loader.setRemoteSort(true);
+      loader.addLoadHandler(
+          new LoadResultListStoreBinding<PagingLoadConfig, CalcDataSimple, PagingLoadResult<CalcDataSimple>>(store));
 
       final Grid<CalcDataSimple> grid = new Grid<CalcDataSimple>(store, cm) {
         @Override
@@ -149,7 +164,7 @@ public class CalcDataView implements IsWidget, EntryPoint {
           });
         }
       };
-      
+
       grid.setLoadMask(true);
       grid.setLoader(loader);
       grid.setAllowTextSelection(true);
@@ -174,7 +189,8 @@ public class CalcDataView implements IsWidget, EntryPoint {
       typeCombo.add("Row");
       typeCombo.add("Cell");
       typeCombo.setValue("Row");
-      // we want to change selection model on select, not value change which fires on blur
+      // we want to change selection model on select, not value change which
+      // fires on blur
       typeCombo.addSelectionHandler(new SelectionHandler<String>() {
         @Override
         public void onSelection(SelectionEvent<String> event) {
@@ -200,8 +216,8 @@ public class CalcDataView implements IsWidget, EntryPoint {
 
       ToolBar toolBar = new ToolBar();
       toolBar.setEnableOverflow(false);
-      //toolBar.add(new LabelToolItem("Selection Mode: "));
-      //toolBar.add(typeCombo);
+      // toolBar.add(new LabelToolItem("Selection Mode: "));
+      // toolBar.add(typeCombo);
 
       VerticalLayoutContainer con = new VerticalLayoutContainer();
       con.add(toolBar, new VerticalLayoutData(1, -1));
@@ -225,11 +241,11 @@ public class CalcDataView implements IsWidget, EntryPoint {
     cont.setWidth(MIN_WIDTH);
     cont.setHeight(MIN_HEIGHT);
     cont.add(panel);
-//    new ExampleContainer(this)
-//        .setMaxHeight(MAX_HEIGHT)
-//        .setMaxWidth(MAX_WIDTH)
-//        .setMinHeight(MIN_HEIGHT)
-//        .setMinWidth(MIN_WIDTH)
-//        .doStandalone();
+    // new ExampleContainer(this)
+    // .setMaxHeight(MAX_HEIGHT)
+    // .setMaxWidth(MAX_WIDTH)
+    // .setMinHeight(MIN_HEIGHT)
+    // .setMinWidth(MIN_WIDTH)
+    // .doStandalone();
   }
 }
