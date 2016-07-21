@@ -24,10 +24,11 @@ public class Controller {
   /**
    * Create a remote service proxy to talk to the server-side Calc service.
    */
-  private final CalcServiceAsync calcService = GWT.create(CalcService.class);
+  private CalcServiceAsync calcService;
 
   public Controller(Model model) {
     this.model = model;
+    calcService = GWT.create(CalcService.class);
   }
 
   protected void updateValue(ECalcCmds cmd) {
