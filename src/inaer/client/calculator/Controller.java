@@ -119,15 +119,9 @@ public class Controller {
   }
 
   protected String getTrimmedStringValue(String value) {
-    int sInd = 0;
-    for (int i = 0; i < value.length() - 1; i++) {
-      if (value.charAt(i) == '0' && value.charAt(i + 1) != '.') {
-        sInd = i + 1;
-        break;
-      }
-    }
-    String res = value.substring(sInd);
-    return res;
+    if(value.length()>1 && value.charAt(0) == '0' && value.charAt(1) != '.')
+      return value.substring(1);
+    return value;
   }
 
   protected void processPercent() {

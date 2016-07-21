@@ -1,2 +1,0 @@
-serviceClass: inaer.client.CalcService
-path: AACC34E024763743801AEB933CDAABD5.gwt.rpc

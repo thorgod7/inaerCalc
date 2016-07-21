@@ -107,6 +107,7 @@ public class CalcDataView implements IsWidget, EntryPoint {
       grid.setLoadMask(true);
       grid.setLoader(loader);
       grid.setAllowTextSelection(true);
+      grid.setHideHeaders(false);
       grid.getView().setStripeRows(true);
       grid.getView().setColumnLines(true);
       grid.setBorders(false);
